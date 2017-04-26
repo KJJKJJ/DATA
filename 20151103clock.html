@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src='../angular/jquery-1.12.3.js'></script>
+</head>
+
+<body>
+    <canvas id="mycan" width="1000" height="800" style="border: solid 2px #ccc;">你的浏览器不支持canvas标签</canvas>
+    <script>
+    var context = document.getElementById('mycan').getContext('2d');
+
+    with(context) {
+
+        function move() {
+            //外圆盘
+            beginPath();
+            fillStyle = "black";
+            arc(400, 400, 200, 0, Math.PI * 2, false);
+            fill();
+            closePath();
+
+            beginPath();
+            fillStyle = "white";
+            arc(400, 400, 195, 0, Math.PI * 2, false);
+            fill();
+            closePath();
+
+            //分钟刻度
+
+            for (var i = 0; i < 60; i++) {
+                beginPath();
+                strokeStyle = "black";
+                lineWidth = 2;
+                arc(400, 400, 195, Math.PI / 180 * i * 6, Math.PI / 180 * (i + 1) * 6, false);
+                lineTo(400, 400);
+                stroke();
+                closePath();
+            }
+            beginPath();
+            fillStyle = "white";
+            arc(400, 400, 180, 0, Math.PI / 180 * 360, false);
+            fill();
+            closePath();
+
+            //大刻度
+
+            for (var i = 0; i < 60; i++) {
+                beginPath();
+                strokeStyle = "black";
+                lineWidth = 4;
+                arc(400, 400, 195, Math.PI / 180 * i * 30, Math.PI / 180 * (i + 1) * 30, false);
+                lineTo(400, 400);
+                stroke();
+                closePath();
+            }
+
+            beginPath();
+            fillStyle = "white";
+            arc(400, 400, 175, 0, Math.PI / 180 * 360, false);
+            fill();
+            closePath();
+
+            // 圆心
+            beginPath();
+            fillStyle = "black";
+            arc(400, 400, 10, 0, Math.PI / 180 * 360, false);
+            fill();
+            closePath();
+
+            //使用时间对象
+            var data = new Date();
+            var hours = data.getHours() >= 12 ? data.getHours() - 12 : data.getHours();
+            var minutes = data.getMinutes();
+            var seconds = data.getSeconds();
+            console.log(hours);
+            console.log(minutes);
+            console.log(seconds);
+
+            // 时针
+            beginPath();
+            strokeStyle = "black";
+            lineWidth = 6;
+            arc(400, 400, 105, Math.PI / 180 * ((hours * 30-90)+((minutes/60)*30)), Math.PI / 180 * ((hours * 30-90)+((minutes/60)*30)), false);
+            lineTo(400, 400);
+            stroke();
+            closePath();
+
+            // 分针
+            beginPath();
+            strokeStyle = "black";
+            lineWidth = 4;
+            arc(400, 400, 145, Math.PI / 180 * ((minutes * 6-90)+((seconds/60)*6)), Math.PI / 180 * ((minutes * 6-90)+((seconds/60)*6)), false);
+            lineTo(400, 400);
+            stroke();
+            closePath();
+
+            // 秒针
+            beginPath();
+            strokeStyle = "black";
+            lineWidth = 2;
+            arc(400, 400, 175, Math.PI / 180 * (seconds * 6-90), Math.PI / 180 * (seconds * 6-90), false);
+            lineTo(400, 400);
+            stroke();
+            closePath();
+
+        }
+        // move();
+        var timer = setInterval(move, 1000);
+
+
+    }
+
+    funA(obj);
+    </script>
+</body>
+
+</html>
